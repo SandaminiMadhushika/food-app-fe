@@ -12,15 +12,6 @@ export default class MainComponent extends React.Component {
         loadPage: true
     };
 
-
-    // async componentDidMount(){
-    //     const url="http://localhost:8080/food/get-foodcategory-all";
-    //     const response = await fetch(url);
-    //     const data = await response.json();
-    //     console.log(data);
-    // }
-    // const [foodCategory, setFoodCaegory] = useState({});
-
     componentDidMount() {
         axios.get(`http://localhost:8080/food/get-foodcategory-all`)
             .then(res => {
@@ -28,13 +19,6 @@ export default class MainComponent extends React.Component {
                 console.log(foodCategory);
                 this.setState({foodCategory: foodCategory});
             });
-
-        // axios.get(`http://localhost:8080/food/get-food-by-name-like/${this.state.foodName}`)
-        //     .then(res => {
-        //         const food = res.data;
-        //         console.log(food);
-        //         this.setState({ food:food });
-        //     });
     }
 
     fetchFood = (e) => {
@@ -43,17 +27,14 @@ export default class MainComponent extends React.Component {
         e.preventDefault();
         console.log("e val"+e.target.value)
         if(this.state.foodName===""){
-            ////this.setState({loadPage: false});
             this.setState({food: []});
             console.log("food if empty return "+this.state.food.length);
-            // this.setState({food: []});
         }else{
             axios.get(`http://localhost:8080/food/get-food-by-name-like/${this.state.foodName}`)
                 .then(res => {
                     const food = res.data;
                     console.log("food"+food);
                     this.setState({food: food});
-                   //// this.setState({loadPage: true});
                     console.log(this.state.loadPage);
                     console.log("food if not return empty"+this.state.food.length);
                 });
@@ -74,15 +55,6 @@ export default class MainComponent extends React.Component {
                 <Container fluid>
                     <Row>
                         <Col>
-                            {/*{!this.state.foodCategory?(<div>hi</div>):(<div>{this.state.foodCategory.map(function (foodCategoryDetail,index){*/}
-                            {/*    return <h1>{foodCategoryDetail.name}</h1>*/}
-                            {/*})}</div>)}*/}
-                            {/*    {!this.state.foodCategory?(<div>hi</div>):(<div>{this.state.foodCategory.map((foodCategoryDetail,index)=>{*/}
-                            {/*        return <h1>{foodCategoryDetail.name}</h1>*/}
-                            {/*    })}</div>)}*/}
-                            {/*    <Dropdown>*/}
-
-                            {/*    </Dropdown>*/}
                             <Dropdown>
                                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                                     Food Categories
@@ -111,7 +83,6 @@ export default class MainComponent extends React.Component {
                                     Search
                                 </Button>
                             </InputGroup>
-                            {/*!this.state.loadPage*/}
                             { !this.state.loadPage && this.state.food.length===0? (<div><Alert variant="success">
                                 <Alert.Heading>Opz, Sorry, No such Food</Alert.Heading>
                             </Alert></div>) : (
@@ -134,5 +105,4 @@ export default class MainComponent extends React.Component {
     }
 }
 
-// {this.state.foodCategory[0].name}
 
